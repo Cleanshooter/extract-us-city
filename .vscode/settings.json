@@ -1,0 +1,8 @@
+{
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true,
+  "eslint.run": "onSave",
+  "cSpell.words": [
+    "Chatsworth"
+  ]
+}
