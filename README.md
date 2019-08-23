@@ -1,4 +1,4 @@
-#Extract US Cities
+# Extract US Cities
 
 ## Installation
 
@@ -39,11 +39,11 @@ I'm not perfect so when you find bugs please post them on the
 [github issue](https://github.com/Cleanshooter/extract-us-city/issues) tracker.
 
 ## Contribute
-PRs welcome please ensure you've run and tested the build.
+PRs are welcome, please ensure you've run and possibly added some more test cases.
 
 ### Benchmarking 
 On my Dell XP 15 it currently takes 49,967 ms to process "Pride and Prejudice" by Jane Austen.  
-Which isn't bad but I'm open to idea on how to improve processing time.
+Which isn't bad (less than a minute) but I'm open to ideas on how to improve processing time.
 
 ## License
 This project is licensed under the terms of the ISC license
