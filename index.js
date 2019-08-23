@@ -32,14 +32,23 @@ const tokenize = (input) => {
   let currentMatch;
   let index = 0;
   while ((currentMatch = wordsRegex.exec(input)) !== null) {
-    result.push({
-      word: currentMatch[0],
-      startCharIndex: currentMatch.index,
-      endCharIndex: wordsRegex.lastIndex,
-      firstWordIndex: index,
-      lastWordIndex: index,
-    });
-    index++;
+    // Test only keep pro-nouns
+    if (
+      currentMatch[0].charAt(0) === currentMatch[0].charAt(0).toUpperCase()
+      || currentMatch[0] === 'of'
+      || currentMatch[0] === 'the'
+      || currentMatch[0] === 'del'
+      || currentMatch[0] === 's'
+    ) {
+      result.push({
+        word: currentMatch[0],
+        startCharIndex: currentMatch.index,
+        endCharIndex: wordsRegex.lastIndex,
+        firstWordIndex: index,
+        lastWordIndex: index,
+      });
+      index++;
+    }
   }
   return result;
 };
@@ -144,7 +153,7 @@ const identifyNearByData = (tokens, fullCity) => {
   const titleCase = toTitleCase(fullCity.word);
   citiesArray.forEach((city, index) => {
     if (city === titleCase) {
-      matches.push(database[index]);
+      matches.push(Object.assign({}, database[index]));
     }
   });
   // Determine direction...
@@ -161,6 +170,7 @@ const identifyNearByData = (tokens, fullCity) => {
       if (foundStateRight.length > 0) {
         direction = 'right';
         foundStateRight.forEach((foundState) => {
+          console.log(foundState);
           matches[foundState.matchIndex].foundState = true;
           matches[foundState.matchIndex].end = foundState.endCharIndex;
           matches[foundState.matchIndex].lastWordIndex = foundState.lastWordIndex;
@@ -172,6 +182,7 @@ const identifyNearByData = (tokens, fullCity) => {
       if (foundStateRight.length === 0 && foundZipRight.length > 0) {
         direction = 'right';
         foundZipRight.forEach((foundZip) => {
+          console.log(foundZip);
           matches[foundZip.matchIndex].foundZip = true;
           matches[foundZip.matchIndex].zip = foundZip.zip;
           matches[foundZip.matchIndex].end = foundZip.endCharIndex;
@@ -207,13 +218,9 @@ const identifyNearByData = (tokens, fullCity) => {
     }
   }
 
-  // Finally Return the one with the most matches
-  // If nothing has been validated and there is only one match
-  // return it as a return by default
+  // Finally return the one with the most matches
+  // Must find at least either State or Zip to get response
   let returnedMatch;
-  if (matches.length === 1) {
-    [returnedMatch] = matches;
-  }
   let foundBoth = false;
   matches.forEach((match) => {
     if (match.foundState && match.foundZip) {
@@ -269,10 +276,16 @@ const extract = (input) => {
   loadDatabase();
   // Tokenize the input string
   const tokens = tokenize(input);
+  console.log(`Tokens: ${tokens.length}`);
   // Results
   const results = [];
   // Loop through the input searching for City Names
   for (let i = 0; i < tokens.length; i++) {
+    if (i % 1000 === 0) {
+      console.log(`At Index: ${i}`);
+      console.log(`Current Results: ${results.length}`);
+      console.log('Most recent result: ', results[results.length - 1]);
+    }
     const token = tokens[i];
     const titleCase = toTitleCase(token.word);
     // Look for matches
@@ -291,7 +304,7 @@ const extract = (input) => {
           // console.log('Final Match: ', fullData);
           if (fullData) {
             // To prevent additional matches inside of found cities we advance the index
-            i = Number(fullData.lastWordIndex) + 1;
+            i = Number(fullData.lastWordIndex);
             delete fullData.lastWordIndex;
             results.push(fullData);
           }

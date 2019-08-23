@@ -1,5 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 const assert = require('assert');
+const https = require('https');
 const extractUsCity = require('./index');
 
 const testSample001 = `
@@ -96,8 +97,8 @@ Thank you,`;
 
 const testSample004 = 'Unified Government of Greeley County, KS 67879';
 const testSample005 = "Port O'Brien, AK 99615";
-
 const testSample006 = ' BCO: Company   PICKUP INFO Zip: 97201 State: OR City: PORTLAND   DELIVERY INFO Zip: 11201 State: NY City: BROOKLYN Commodity: Stuff Weight: 42,500 POC: Person ';
+const testSample007 = 'A string with a US city in it like Appleton WI, 54911';
 
 assert.deepEqual(extractUsCity.extract(testSample001), [
   {
@@ -276,3 +277,77 @@ assert.deepEqual(extractUsCity.extract(testSample006), [
     end: 115,
   },
 ]);
+assert.deepEqual(extractUsCity.extract(testSample007), [
+  {
+    city: 'Appleton',
+    state_code: 'WI',
+    state_name: 'Wisconsin',
+    county_name: 'Outagamie',
+    lat: 44.2774,
+    lng: -88.3894,
+    incorporated: true,
+    timezone: 'America/Chicago',
+    foundState: true,
+    end: 53,
+    foundZip: true,
+    zip: '54911',
+    start: 35,
+  },
+]);
+
+// Let's parse Pride and Prejudiced for funsies
+https
+  .get('https://www.gutenberg.org/files/1342/1342-0.txt', (resp) => {
+    let data = '';
+
+    // A chunk of data has been received.
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+      const parseStart = new Date();
+      // console.log(data);
+      assert.deepEqual(extractUsCity.extract(data), [
+        {
+          city: 'Fairbanks',
+          state_code: 'AK',
+          state_name: 'Alaska',
+          county_name: 'Fairbanks North Star',
+          lat: 64.8353,
+          lng: -147.6533,
+          incorporated: true,
+          timezone: 'America/Anchorage',
+          zips: '99701 99703 99707',
+          foundState: true,
+          end: 714370,
+          foundZip: false,
+          start: 714357,
+        },
+        {
+          city: 'Salt Lake City',
+          state_code: 'UT',
+          state_name: 'Utah',
+          county_name: 'Salt Lake',
+          lat: 40.7774,
+          lng: -111.9301,
+          incorporated: true,
+          timezone: 'America/Denver',
+          foundState: true,
+          end: 714540,
+          foundZip: true,
+          zip: '84116',
+          start: 714516,
+        },
+      ]);
+      const parseEnd = new Date();
+      console.log(
+        `Total time to process Pride and Prejudice by Jane Austen: ${parseEnd.getTime()
+          - parseStart.getTime()} ms`,
+      );
+    });
+  })
+  .on('error', (err) => {
+    console.log(`Error: ${err.message}`);
+  });
