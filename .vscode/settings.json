@@ -3,6 +3,11 @@
   "editor.formatOnSave": true,
   "eslint.run": "onSave",
   "cSpell.words": [
-    "Chatsworth"
+    "Bolingbrook",
+    "Chatsworth",
+    "Meriden",
+    "Multnomah",
+    "Toppenish",
+    "uglifyjs"
   ]
 }

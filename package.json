@@ -2,22 +2,29 @@
   "name": "extract-us-city",
   "version": "0.0.1",
   "description": "A library that extracts City, State and Zip information from text and provides a structured response.",
-  "main": "index.js",
+  "main": "dist/index.min.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "eslint index.js && node test.js",
+    "clean":"rm -r dist && mkdir dist",
+    "compress": "terser index.js -o dist/index.min.js -c -m --source-map",
+    "copy-db": "cp ./city-db.json ./dist/city-db.json",
+    "build": "npm run test && npm run clean && npm run compress && npm run copy-db"
   },
   "keywords": [
     "parse",
     "extract",
+    "us",
     "city",
     "state",
     "zip",
     "location",
-    "nlp"
+    "nlp",
+    "natural language processing"
   ],
   "author": "Joe Motacek",
   "license": "ISC",
   "devDependencies": {
+    "terser": "^4.2.0",
     "eslint": "^5.0.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.11.0",
