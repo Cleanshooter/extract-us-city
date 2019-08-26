@@ -23,7 +23,7 @@ Extract US Cities is available as an [npm package](https://www.npmjs.org/package
 npm install extract-us-cities
 ```
 
-## [Getting Started](#getting-started)
+## [Getting Started](#get-started)
 ### Node JS
 ```javascript
 const { extract } = require('extract-us-cities');
