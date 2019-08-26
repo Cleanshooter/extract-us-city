@@ -312,7 +312,7 @@ const extract = (input) => {
       }
     });
   }
-  console.log('Results: ', results);
+  // console.log('Results: ', results);
 
   return results;
 };

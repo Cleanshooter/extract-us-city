@@ -1,14 +1,15 @@
 {
   "name": "extract-us-city",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A library that extracts City, State and Zip information from text and provides a structured response.",
   "main": "dist/index.min.js",
   "scripts": {
     "test": "eslint index.js && node test.js",
-    "clean":"rm -r dist && mkdir dist",
-    "compress": "terser index.js -o dist/index.min.js -c -m --source-map",
+    "clean": "rm -r dist && mkdir dist",
+    "compress": "terser index.js -o dist/index.min.js -c drop_console -m --source-map",
+    "fe-build": "browserify index.js -t [ babelify --presets [ @babel/preset-env ] ] -t brfs --standalone extractUsCity | terser -c drop_console -m -o dist/extract-us-city.js",
     "copy-db": "cp ./city-db.json ./dist/city-db.json",
-    "build": "npm run test && npm run clean && npm run compress && npm run copy-db"
+    "build": "npm run test && npm run clean && npm run compress && npm run copy-db && npm run fe-build"
   },
   "keywords": [
     "parse",
@@ -24,12 +25,18 @@
   "author": "Joe Motacek",
   "license": "ISC",
   "devDependencies": {
-    "terser": "^4.2.0",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babelify": "^10.0.0",
+    "brfs": "^2.0.2",
+    "browserify": "^16.5.0",
     "eslint": "^5.0.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "terser": "^4.2.0",
+    "tinyify": "^2.5.1"
   },
   "dependencies": {}
 }

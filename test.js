@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 const assert = require('assert');
-const https = require('https');
-const extractUsCity = require('./index');
+// const https = require('https');
+const extractUsCity = require('./dist/index.min.js');
 
 const testSample001 = `
 
@@ -296,6 +296,8 @@ assert.deepEqual(extractUsCity.extract(testSample007), [
 ]);
 
 // Let's parse Pride and Prejudiced for funsies
+// two days latter... let's not do it everytime...
+/*
 https
   .get('https://www.gutenberg.org/files/1342/1342-0.txt', (resp) => {
     let data = '';
@@ -351,3 +353,4 @@ https
   .on('error', (err) => {
     console.log(`Error: ${err.message}`);
   });
+  */

@@ -23,11 +23,12 @@ Extract US Cities is available as an [npm package](https://www.npmjs.org/package
 npm install extract-us-cities
 ```
 
-## Usage
+## [Getting Started](#getting-started)
+### Node JS
 ```javascript
 const { extract } = require('extract-us-cities');
 
-const string = 'A string with a US city in it like Appleton WI, 54911';
+const string = 'A string with a US city in it like Appleton WI, 54911. I hope it finds it.';
 const result = extract(string);
 /* result = [
   {
@@ -47,6 +48,21 @@ const result = extract(string);
   },
 ];
 */
+```
+
+### Browser
+```html
+<textarea id="myTextArea"></textarea>
+<button id="myButton" type="button">Extract</button>
+<script src="./dist/extract-us-city.js"></script>
+<script src="./somewhere/you/have/js/jquery-min.js"></script>
+<script>
+$('#myButton').click(() => {
+  var text = $('#myTextArea').val();
+  var data = extractUsCity.extract(text);
+  console.log(data);
+});
+</script>
 ```
 
 ## Issues
