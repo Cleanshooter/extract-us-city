@@ -2,16 +2,18 @@
 
 This project uses Natural Language Processing techniques to identify US cities in a body of text.  
 
-The goal of this project is high precision identification vs. loose identification.  So you won't get matches for Cities that don't have any refining context surrounding them.  
+Overall we use basic tokenization to create an array of Pronouns (including all-caps ones because human beings are special) to break down the input text.  Then we compare those pronouns against a US City dictionary to perform the named entity extraction.  Once a city has been identified we refine the potential candidates down to a single match based on other information near to the found entity, like the State and Zip Code.   
 
-Examples:
+The goal of this project is high precision identification vs. loose identification (a.k.a Micro Understanding).  So you won't get matches for Cities that don't have any refining context surrounding them.  
+
+### Examples:
 "Brandon went to the park." 
 This won't return results because even though there are several cities names Brandon there no context indicating it's a place.
 
 "Some interesting things happened in Charlotte today."
 This also won't return results even though we know Charlotte is a place (unless interesting things are happening inside of a person named Charlotte which would be strange BUT possible I guess).  This is because we don't have enough context to know which Charlotte it is.  Is it Charlotte, MI or Charlotte, TX or... (this list goes on).
 
-Ultimately we need enough local context to narrow the it down to one match.
+Ultimately we need enough local context to narrow the it down to one match.  For actual example see the test.js file.
 
 ## Installation
 
