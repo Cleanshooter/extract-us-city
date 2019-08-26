@@ -14,7 +14,8 @@
     "compress": "terser index.js -o dist/index.min.js -c drop_console -m --source-map",
     "fe-build": "browserify index.js -t [ babelify --presets [ @babel/preset-env ] ] -t brfs --standalone extractUsCity | terser -c drop_console -m -o dist/extract-us-city.js",
     "copy-db": "cp ./city-db.json ./dist/city-db.json",
-    "build": "npm run test && npm run clean && npm run compress && npm run copy-db && npm run fe-build"
+    "copy-to-page": "cp ./dist/extract-us-city.js ./docs/js/extract-us-city.js",
+    "build": "npm run test && npm run clean && npm run compress && npm run copy-db && npm run fe-build && npm run copy-to-page"
   },
   "keywords": [
     "parse",
