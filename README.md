@@ -6,16 +6,6 @@ Overall we use basic tokenization to create an array of Pronouns (including all-
 
 The goal of this project is high precision identification vs. loose identification (a.k.a Micro Understanding).  So you won't get matches for Cities that don't have any refining context surrounding them.  
 
-### Examples of what this will NOT do:
-
-"Brandon went to the park." 
-This won't return results because even though there are several cities names Brandon there no context indicating it is a place.
-
-"Some interesting things happened in Charlotte today."
-This also won't return results even though we know Charlotte is a place (unless interesting things are happening inside of a person named Charlotte which would be strange BUT possible I guess).  This is because we don't have enough context to know which Charlotte it is.  Is it Charlotte, MI or Charlotte, TX or... (this list goes on).
-
-Ultimately we need enough local context to narrow the it down to one match.  For actual examples see the test.js file in hte project or test it out on the [demo](https://cleanshooter.github.io/extract-us-city/#demo).
-
 ## Installation
 
 Extract US Cities is available as an [npm package](https://www.npmjs.com/package/extract-us-city).
@@ -65,6 +55,23 @@ $('#myButton').click(() => {
 });
 </script>
 ```
+## Data
+
+The database contains records for over 70,000 US cities along with their associated metadata.  The result will always contain the location where the match was found as well as whether or not the State and/or Zip Code were identified.  
+
+If a zip code is found the "zip" field will be populated.  If a zip code is not provided and there is only one zip code for the city the "zip" field will also populated.  However, if no zip code is found and there are multiple zip codes for a given city all zip codes will be provided in a different field call "zips".
+
+## Examples
+
+You can find all the test cases I'm currently validating results for in the test.js file.  If you devise a test case you think this should work for where it does not, please submit an issue or a Pull Request.  
+
+### Examples of what this will NOT do (nor is it intended to):
+
+*"Brandon went to the park."*  
+This won't return results because even though there are several cities names Brandon there no context indicating it is a place.
+
+*"Some interesting things happened in Charlotte today."*  
+This also won't return results even though we know Charlotte is a place (unless interesting things are happening inside of a person named Charlotte which would be strange BUT possible I guess).  This is because we don't have enough context to know which Charlotte it is.  Is it Charlotte, MI or Charlotte, TX or... (this list goes on).
 
 ## Issues
 I'm not perfect so when you find bugs please post them on the 
