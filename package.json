@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "eslint index.js && node test.js",
-    "clean": "rm -r dist && mkdir dist",
+    "clean": "rm -rf dist && mkdir dist",
     "compress": "terser index.js -o dist/index.min.js -c drop_console -m --source-map",
     "fe-build": "browserify index.js -t [ babelify --presets [ @babel/preset-env ] ] -t brfs --standalone extractUsCity | terser -c drop_console -m -o dist/extract-us-city.js",
     "copy-db": "cp ./city-db.json ./dist/city-db.json",

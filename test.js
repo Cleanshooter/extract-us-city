@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 const assert = require('assert');
 // const https = require('https');
-const extractUsCity = require('./dist/index.min.js');
+const extractUsCity = require('./index.js');
 
 const testSample001 = `
 
