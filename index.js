@@ -1,11 +1,12 @@
 /* eslint-disable no-cond-assign */
 const fs = require('fs');
+const path = require('path');
 
 let database;
 let citiesArray;
 
 const loadDatabase = () => {
-  const fileData = fs.readFileSync('./city-db.json');
+  const fileData = fs.readFileSync(path.resolve(__dirname, 'city-db.json'));
   if (!database) {
     database = JSON.parse(fileData);
   }

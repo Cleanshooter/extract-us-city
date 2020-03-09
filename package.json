@@ -1,6 +1,6 @@
 {
   "name": "extract-us-city",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "A library that extracts City, State and Zip information from text and provides a structured response.",
   "main": "dist/index.min.js",
   "homepage":"https://cleanshooter.github.io/extract-us-city/",
@@ -44,5 +44,8 @@
     "terser": "^4.2.0",
     "tinyify": "^2.5.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "dist"
+  ]
 }
